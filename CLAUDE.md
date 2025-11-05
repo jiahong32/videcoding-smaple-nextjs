@@ -126,3 +126,9 @@ Components must be manually created in `components/ui/`:
 - Development build: `.next/` directory (gitignored)
 - Production build: `.next/` directory
 - Static assets: `public/` directory
+
+## Active Technologies
+- TypeScript 5 with Next.js 16, React 19.2.0 + Next.js (App Router), Tailwind CSS v4, shadcn/ui, Radix UI (001-breakfast-delivery-app)
+
+## Recent Changes
+- 001-breakfast-delivery-app: Added TypeScript 5 with Next.js 16, React 19.2.0 + Next.js (App Router), Tailwind CSS v4, shadcn/ui, Radix UI
