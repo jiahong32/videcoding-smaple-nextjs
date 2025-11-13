@@ -28,8 +28,12 @@
     "db:switch": "tsx scripts/db/switch-database.ts",
     "db:switch:postgres": "tsx scripts/db/switch-database.ts postgres",
     "db:switch:sqlserver": "tsx scripts/db/switch-database.ts sqlserver",
-    "db:setup": "npm run db:test && npm run prisma:generate && npm run prisma:push",
-    "db:setup:local": "npm run db:start && npm run db:test && npm run prisma:generate && npm run prisma:push"
+    "db:seed": "tsx prisma/seed.ts",
+    "db:setup": "npm run db:test && npm run prisma:generate && npm run prisma:push && npm run db:seed",
+    "db:setup:local": "npm run db:start && npm run db:test && npm run prisma:generate && npm run prisma:push && npm run db:seed"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",
