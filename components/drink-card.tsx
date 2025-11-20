@@ -1,5 +1,5 @@
 import React from "react"
-import { type Drink } from "./drinks-client"
+import { type Drink } from "@/lib/drinks"
 
 interface DrinkCardProps {
     drink: Drink
