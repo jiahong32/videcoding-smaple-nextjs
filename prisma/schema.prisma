@@ -41,6 +41,7 @@ enum PaymentMethodType {
   MASTERCARD
   VISA
   APPLE_PAY
+  CASH
 }
 
 enum PaymentStatus {

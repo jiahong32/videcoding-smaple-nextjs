@@ -1,35 +1,41 @@
-import { Button } from "@/components/ui/button";
+import Link from "next/link"
+import DrinksClient from "@/components/drinks-client"
+import { prisma } from "@/lib/db/prisma"
+import { type Drink } from "@/lib/drinks"
 
-export default function Home() {
+export default async function Home() {
+  const products = await prisma.product.findMany({
+    where: {
+      isAvailable: true,
+      // category: 'DRINK' // Removed to show all products (including food)
+    }
+  });
+
+  // Map Prisma products to Drink type
+  const drinks: Drink[] = products.map(p => ({
+    id: p.id,
+    name: p.nameZh || p.name, // Use Chinese name if available, fallback to English
+    description: p.description,
+    price: Number(p.price), // Convert Decimal to number
+    image: p.image
+  }));
   return (
-    <div className="flex min-h-screen items-center justify-center p-8">
-      <main className="flex flex-col items-center gap-8 max-w-2xl">
-        <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold tracking-tight">
-            Next.js + Tailwind CSS + shadcn/ui
-          </h1>
-          <p className="text-muted-foreground text-lg">
-            A modern web application starter with TypeScript, Tailwind CSS v4, and shadcn/ui components.
-          </p>
-        </div>
-        
-        <div className="flex flex-wrap gap-4 justify-center">
-          <Button>Default Button</Button>
-          <Button variant="secondary">Secondary</Button>
-          <Button variant="outline">Outline</Button>
-          <Button variant="ghost">Ghost</Button>
-          <Button variant="destructive">Destructive</Button>
-        </div>
+    <div className="min-h-screen bg-gray-50 p-6 sm:p-10">
+      <main className="mx-auto max-w-7xl">
+        <header className="mb-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+          <div>
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 tracking-tight">飲料點單系統</h1>
+            <p className="text-gray-500 mt-2 text-lg">請選擇您想要的飲料，點選「加入購物車」以加入訂單。</p>
+          </div>
+          <Link
+            href="/orders"
+            className="text-sm font-medium text-gray-600 hover:text-gray-900 underline underline-offset-4"
+          >
+            查看歷史紀錄
+          </Link>
+        </header>
 
-        <div className="flex gap-4 justify-center">
-          <Button size="sm">Small</Button>
-          <Button size="default">Default</Button>
-          <Button size="lg">Large</Button>
-        </div>
-
-        <div className="text-center text-sm text-muted-foreground mt-8">
-          <p>Edit <code className="bg-muted px-2 py-1 rounded">app/page.tsx</code> to get started</p>
-        </div>
+        <DrinksClient drinks={drinks} />
       </main>
     </div>
   );
